@@ -1,448 +1,309 @@
-import React, { useState, useEffect } from 'react';
-import { Camera, Video, Heart, Mail, Phone, Instagram, Menu, X, ChevronDown, Play, Star } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vrin Resende | Florescer - Fotografia, Cuidado & Amparo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
-const App = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            900: '#881337',
+                        },
+                        stone: {
+                            50: '#fafaf9',
+                            200: '#e7e5e4',
+                            800: '#292524',
+                            900: '#1c1917',
+                        }
+                    },
+                    animation: {
+                        fadeIn: 'fadeIn 0.5s ease-in-out',
+                        fadeInUp: 'fadeInUp 0.8s ease-out forwards',
+                        blob: 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #fafaf9; }
+        ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 10px; }
+        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="font-sans text-stone-800 bg-stone-50 selection:bg-rose-100 selection:text-rose-900">
 
-  // Dados da Vrndavana
-  const contactInfo = {
-    name: "Vrndavana Resende",
-    phone: "5531972679964", // Número formatado para link do WhatsApp
-    displayPhone: "(31) 97267-9964",
-    email: "vrnbarcellos@icloud.com",
-    instagram: "@vrndavanaresende"
-  };
-
-  // Efeito de scroll para a navbar
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const navLinks = [
-    { name: 'Início', href: '#home' },
-    { name: 'Sobre', href: '#sobre' },
-    { name: 'Portfólio', href: '#portfolio' },
-    { name: 'Serviços', href: '#servicos' },
-    { name: 'Depoimentos', href: '#depoimentos' },
-    { name: 'Contato', href: '#contato' },
-  ];
-
-  return (
-    <div className="font-sans text-stone-800 bg-stone-50 selection:bg-rose-200 selection:text-rose-900">
-      
-      {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-4'}`}>
-        <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
-          
-          {/* Logo Area */}
-          <a href="#home" className="flex items-center gap-2 group">
-            <div className="h-12 w-auto overflow-hidden">
-               <img 
-                 src="logo_florescer_fundo_transparente_final (1).png" 
-                 alt="Florescer Logo" 
-                 className="h-full object-contain"
-                 onError={(e) => {
-                   e.target.style.display = 'none';
-                   e.target.parentElement.innerHTML = '<span class="text-2xl font-serif text-stone-800 tracking-wider">Florescer</span>';
-                 }}
-               />
-            </div>
-          </a>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8 items-center">
-            {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href} 
-                className="text-stone-600 hover:text-rose-900 text-sm uppercase tracking-widest transition-colors font-medium"
-              >
-                {link.name}
-              </a>
-            ))}
-            <a 
-              href={`https://wa.me/${contactInfo.phone}`}
-              target="_blank"
-              rel="noreferrer"
-              className="bg-stone-800 text-white px-6 py-2 rounded-full text-sm hover:bg-rose-900 transition-colors duration-300"
-            >
-              Orçamento
-            </a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button onClick={toggleMenu} className="md:hidden text-stone-800 p-2">
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile Dropdown */}
-        {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-4 flex flex-col items-center space-y-4 animate-fadeIn">
-            {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href} 
-                onClick={() => setIsMenuOpen(false)}
-                className="text-stone-600 hover:text-rose-900 text-lg"
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-        )}
-      </nav>
-
-      {/* Hero Section */}
-      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="src=minha_foto_capa.jpg.jpg" 
-            alt="Mãe e bebê" 
-            className="w-full h-full object-cover opacity-90"
-            onError={(e) => {
-              e.target.src = "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?q=80&w=2070&auto=format&fit=crop";
-            }}
-          />
-          <div className="absolute inset-0 bg-black/20 md:bg-black/10"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent"></div>
-        </div>
-
-        <div className="container relative z-10 px-4 text-center text-white pt-20">
-          <h2 className="text-sm md:text-base uppercase tracking-[0.3em] mb-4 animate-fadeInUp">Fotografia de Parto & Família</h2>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif mb-6 leading-tight animate-fadeInUp delay-100">
-            Eternizando o milagre <br className="hidden md:block" />
-            <span className="italic font-light">da vida</span>
-          </h1>
-          <p className="max-w-xl mx-auto text-lg md:text-xl font-light mb-10 opacity-90 animate-fadeInUp delay-200">
-            Capturando cada emoção, cada lágrima e o primeiro suspiro com sensibilidade e amor.
-          </p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center animate-fadeInUp delay-300">
-            <a href="#portfolio" className="bg-white text-stone-900 px-8 py-3 rounded-full hover:bg-stone-100 transition duration-300 font-medium">
-              Ver Portfólio
-            </a>
-            <a href={`https://wa.me/${contactInfo.phone}`} className="border border-white text-white px-8 py-3 rounded-full hover:bg-white/10 transition duration-300 font-medium">
-              Falar com Vrndavana
-            </a>
-          </div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white animate-bounce">
-          <ChevronDown size={32} strokeWidth={1} />
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="sobre" className="py-20 md:py-28 bg-stone-50">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
-            <div className="w-full md:w-1/2 relative">
-              <div className="aspect-[3/4] rounded-lg overflow-hidden shadow-xl relative z-10">
-                <img 
-                  src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1600&auto=format&fit=crop" 
-                  alt="Vrndavana Resende" 
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              {/* Decorative element */}
-              <div className="absolute -bottom-6 -right-6 w-2/3 h-2/3 border-2 border-rose-900/20 rounded-lg -z-0"></div>
-            </div>
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-transparent py-6">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
             
-            <div className="w-full md:w-1/2">
-              <span className="text-rose-900 uppercase tracking-widest text-sm font-semibold mb-2 block">Quem Sou</span>
-              <h2 className="text-3xl md:text-4xl font-serif text-stone-800 mb-6">Olá, sou a Vrndavana</h2>
-              <p className="text-stone-600 mb-6 leading-relaxed">
-                Fotógrafa e videomaker, dedicada a compartilhar eventos, projetos e inspirações devocionais. Meu trabalho é uma forma de 
-                <span className="italic text-rose-900 font-medium"> Seva com amor</span>.
-              </p>
-              <p className="text-stone-600 mb-8 leading-relaxed">
-                Acredito que o nascimento é um dos momentos mais sagrados da existência humana. Minha missão com o 
-                <strong className="text-stone-800"> Florescer</strong> é documentar essa jornada com respeito, discrição e sensibilidade artística, transformando memórias fugazes em heranças visuais eternas.
-              </p>
-              
-              <div className="grid grid-cols-2 gap-6 mb-8">
-                <div>
-                  <h4 className="font-serif text-2xl text-stone-800 mb-1">50+</h4>
-                  <p className="text-sm text-stone-500 uppercase tracking-wider">Histórias Contadas</p>
+            <a href="#home" class="flex items-center gap-2">
+                <div class="h-10 md:h-12 w-auto">
+                    <img src="logo_florescer_fundo_transparente_final (1).png" alt="Florescer" class="h-full object-contain" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-2xl font-serif tracking-widest text-stone-800\'>FLORESCER</span>'">
                 </div>
-                <div>
-                  <h4 className="font-serif text-2xl text-stone-800 mb-1">100%</h4>
-                  <p className="text-sm text-stone-500 uppercase tracking-wider">Amor e Entrega</p>
-                </div>
-              </div>
+            </a>
 
-              <img 
-                src="logo_florescer_fundo_transparente_final (1).png" 
-                alt="Assinatura Florescer" 
-                className="h-16 opacity-60"
-                onError={(e) => e.target.style.display = 'none'}
-              />
+            <div class="hidden md:flex space-x-10 items-center">
+                <a href="#sobre" class="text-xs uppercase tracking-[0.2em] hover:text-rose-900 transition-colors">A Artista</a>
+                <a href="#portfolio" class="text-xs uppercase tracking-[0.2em] hover:text-rose-900 transition-colors">Portfólio</a>
+                <a href="#proposta" class="text-xs uppercase tracking-[0.2em] hover:text-rose-900 transition-colors">O Cuidado</a>
+                <a href="#contato" class="text-xs uppercase tracking-[0.2em] px-6 py-2 border border-stone-800 rounded-full hover:bg-stone-800 hover:text-white transition-all duration-300">Contato</a>
             </div>
-          </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-stone-800 p-2">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
         </div>
-      </section>
 
-      {/* Portfolio Grid */}
-      <section id="portfolio" className="py-20 bg-white">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <span className="text-rose-900 uppercase tracking-widest text-sm font-semibold">Galeria</span>
-            <h2 className="text-3xl md:text-4xl font-serif text-stone-800 mt-2">Momentos Eternizados</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* Gallery Item 1 - Birth */}
-            <div className="group relative aspect-[4/5] overflow-hidden bg-stone-100 cursor-pointer">
-              <img 
-                src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?q=80&w=2070&auto=format&fit=crop" 
-                alt="Parto Humanizado" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <p className="text-white text-lg font-serif italic">O Primeiro Olhar</p>
-              </div>
-            </div>
-
-            {/* Gallery Item 2 - Pregnant */}
-            <div className="group relative aspect-[4/5] overflow-hidden bg-stone-100 cursor-pointer">
-              <img 
-                src="https://images.unsplash.com/photo-1551643556-0e32e30fc819?q=80&w=2069&auto=format&fit=crop" 
-                alt="Ensaio Gestante" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <p className="text-white text-lg font-serif italic">A Doce Espera</p>
-              </div>
-            </div>
-
-            {/* Gallery Item 3 - Baby details */}
-            <div className="group relative aspect-[4/5] overflow-hidden bg-stone-100 cursor-pointer">
-              <img 
-                src="https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=2070&auto=format&fit=crop" 
-                alt="Detalhes do Bebê" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <p className="text-white text-lg font-serif italic">Pequenos Detalhes</p>
-              </div>
-            </div>
-
-             {/* Gallery Item 4 - Family */}
-            <div className="group relative aspect-[4/5] overflow-hidden bg-stone-100 cursor-pointer lg:col-span-2">
-              <img 
-                src="https://images.unsplash.com/photo-1544126566-474435cc988f?q=80&w=2070&auto=format&fit=crop" 
-                alt="Família" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <p className="text-white text-lg font-serif italic">Conexão Familiar</p>
-              </div>
-            </div>
-
-             {/* Gallery Item 5 - Video Thumbnail */}
-            <div className="group relative aspect-[4/5] overflow-hidden bg-stone-900 cursor-pointer flex items-center justify-center">
-              <img 
-                src="https://images.unsplash.com/photo-1587563871196-328e3721345d?q=80&w=2071&auto=format&fit=crop" 
-                alt="Video Frame" 
-                className="w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                 <div className="bg-white/20 backdrop-blur-sm p-4 rounded-full mb-2 group-hover:bg-white/30 transition-all">
-                    <Play className="text-white fill-white" size={32} />
-                 </div>
-                 <p className="text-white font-serif tracking-widest text-sm uppercase">Assistir Filme</p>
-              </div>
-            </div>
-          </div>
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-lg shadow-xl py-8 flex flex-col items-center space-y-6 animate-fadeIn border-t border-stone-100">
+            <a href="#sobre" class="mobile-link text-lg font-serif">A Artista</a>
+            <a href="#portfolio" class="mobile-link text-lg font-serif">Portfólio</a>
+            <a href="#proposta" class="mobile-link text-lg font-serif">O Cuidado</a>
+            <a href="#contato" class="mobile-link text-lg font-serif">Contato</a>
         </div>
-      </section>
+    </nav>
 
-      {/* Services Section */}
-      <section id="servicos" className="py-20 bg-stone-100">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Service 1 */}
-            <div className="bg-white p-8 md:p-12 text-center hover:shadow-xl transition-shadow duration-300 rounded-sm">
-              <div className="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-rose-900">
-                <Camera size={32} strokeWidth={1.5} />
-              </div>
-              <h3 className="text-xl font-serif text-stone-800 mb-4">Fotografia de Parto</h3>
-              <p className="text-stone-600 text-sm leading-relaxed mb-6">
-                Cobertura completa do trabalho de parto até as primeiras horas de vida. Plantão 24h a partir de 37 semanas.
-              </p>
-              <a href="#contato" className="text-rose-900 text-sm uppercase font-semibold tracking-wider hover:underline">Saiba mais</a>
-            </div>
-
-            {/* Service 2 */}
-            <div className="bg-white p-8 md:p-12 text-center hover:shadow-xl transition-shadow duration-300 rounded-sm transform md:-translate-y-4">
-              <div className="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-rose-900">
-                <Video size={32} strokeWidth={1.5} />
-              </div>
-              <h3 className="text-xl font-serif text-stone-800 mb-4">Filmes de Nascimento</h3>
-              <p className="text-stone-600 text-sm leading-relaxed mb-6">
-                Um registro cinematográfico e sonoro. O choro, a respiração e as primeiras palavras de amor capturadas para sempre.
-              </p>
-              <a href="#contato" className="text-rose-900 text-sm uppercase font-semibold tracking-wider hover:underline">Saiba mais</a>
-            </div>
-
-            {/* Service 3 */}
-            <div className="bg-white p-8 md:p-12 text-center hover:shadow-xl transition-shadow duration-300 rounded-sm">
-              <div className="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center mx-auto mb-6 text-rose-900">
-                <Heart size={32} strokeWidth={1.5} />
-              </div>
-              <h3 className="text-xl font-serif text-stone-800 mb-4">Gestante & Família</h3>
-              <p className="text-stone-600 text-sm leading-relaxed mb-6">
-                Ensaios leves e naturais, focados na conexão entre vocês, seja na espera ou no cotidiano com o bebê.
-              </p>
-              <a href="#contato" className="text-rose-900 text-sm uppercase font-semibold tracking-wider hover:underline">Saiba mais</a>
-            </div>
-          </div>
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="src=minha_foto_capa.jpg.jpg" alt="Amparo no nascimento" class="w-full h-full object-cover scale-105" onerror="this.src='https://images.unsplash.com/photo-1555252333-9f8e92e65df9?q=80&w=2070&auto=format&fit=crop'">
+            <div class="absolute inset-0 bg-stone-900/10"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-stone-50"></div>
         </div>
-      </section>
 
-      {/* Testimonials */}
-      <section id="depoimentos" className="py-20 bg-stone-800 text-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-32 h-32 bg-rose-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute bottom-0 right-0 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="flex justify-center gap-1 mb-6 text-rose-300">
-              <Star size={20} fill="currentColor" />
-              <Star size={20} fill="currentColor" />
-              <Star size={20} fill="currentColor" />
-              <Star size={20} fill="currentColor" />
-              <Star size={20} fill="currentColor" />
+        <div class="container relative z-10 px-4 text-center">
+            <h2 class="text-xs md:text-sm uppercase tracking-[0.5em] text-stone-800 mb-6 animate-fadeInUp" style="animation-delay: 0.2s;">Mãos que amparam, olhos que guardam</h2>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif text-stone-900 mb-8 leading-tight animate-fadeInUp" style="animation-delay: 0.4s;">
+                Florescer <br>
+                <span class="italic font-light opacity-80 text-rose-900">com cuidado</span>
+            </h1>
+            <p class="max-w-xl mx-auto text-lg md:text-xl font-light text-stone-700 mb-12 animate-fadeInUp italic" style="animation-delay: 0.6s;">
+                "Fotografar um parto é estar presente por inteira. É cuidar da mulher, amparar sua força e traduzir seu milagre em imagens."
+            </p>
+            <div class="animate-fadeInUp" style="animation-delay: 0.8s;">
+                <a href="#contato" class="inline-block px-10 py-4 bg-stone-900 text-white rounded-full hover:bg-rose-900 transition-all duration-300 shadow-lg tracking-widest text-xs uppercase">Vamos Conversar?</a>
             </div>
-            <h2 className="text-2xl md:text-3xl font-serif italic mb-8 leading-relaxed">
-              "Vrndavana foi um anjo no nosso parto. Nem percebemos que ela estava lá, mas quando vimos as fotos, revivemos cada emoção com uma intensidade que nem sabíamos ser possível."
-            </h2>
-            <div className="flex items-center justify-center gap-4">
-               <div className="h-12 w-12 rounded-full bg-stone-600 overflow-hidden">
-                 <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Cliente" className="h-full w-full object-cover" />
-               </div>
-               <div className="text-left">
-                  <p className="font-medium text-white">Ana & Marcos</p>
-                  <p className="text-sm text-stone-400">Parto Domiciliar</p>
-               </div>
-            </div>
-          </div>
         </div>
-      </section>
+    </section>
 
-      {/* Contact Section */}
-      <section id="contato" className="py-20 bg-rose-50/50">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col lg:flex-row gap-12 max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-            
-            {/* Contact Info */}
-            <div className="lg:w-1/3 bg-stone-900 text-white p-10 md:p-12 flex flex-col justify-between">
-              <div>
-                <h3 className="text-2xl font-serif mb-6">Vamos conversar?</h3>
-                <p className="text-stone-300 mb-8 font-light">
-                  Cada nascimento é único. Me conte um pouco sobre sua história e como você sonha em registrar esse momento.
-                </p>
-                
-                <div className="space-y-6">
-                  <div className="flex items-center gap-4">
-                    <Phone className="text-rose-300" size={20} />
-                    <span>{contactInfo.displayPhone}</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <Mail className="text-rose-300" size={20} />
-                    <span>{contactInfo.email}</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <Instagram className="text-rose-300" size={20} />
-                    <span>{contactInfo.instagram}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-12">
-                <img 
-                  src="logo_florescer_fundo_transparente_final (1).png" 
-                  alt="Florescer" 
-                  className="h-12 opacity-80 invert brightness-0"
-                  onError={(e) => e.target.style.display = 'none'}
-                />
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div className="lg:w-2/3 p-10 md:p-12">
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-stone-700 mb-2">Seu Nome</label>
-                    <input type="text" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-rose-900 focus:outline-none transition" placeholder="Nome completo" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-stone-700 mb-2">Data Provável do Parto</label>
-                    <input type="date" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-rose-900 focus:outline-none transition" />
-                  </div>
+    <!-- About Section -->
+    <section id="sobre" class="py-24 md:py-32 bg-stone-50 overflow-hidden border-b border-stone-200">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="w-full lg:w-1/2 relative">
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl grayscale-[20%] hover:grayscale-0 transition-all duration-1000">
+                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1600&auto=format&fit=crop" alt="Vrin Resende" class="w-full aspect-[4/5] object-cover">
+                    </div>
+                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-rose-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+                    <p class="absolute -bottom-6 -right-6 text-stone-300 font-serif text-9xl -z-0 opacity-20 select-none">Vrin</p>
                 </div>
                 
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Local do Parto / Cidade</label>
-                  <input type="text" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-rose-900 focus:outline-none transition" placeholder="Ex: Hospital Sofia Feldman, BH" />
+                <div class="w-full lg:w-1/2 lg:pl-10">
+                    <span class="text-rose-900 uppercase tracking-[0.3em] text-[10px] font-bold mb-4 block">A Alma e o Cuidado</span>
+                    <h2 class="text-4xl md:text-5xl font-serif text-stone-900 mb-8 leading-snug">Eu sou a Vrin, <br><span class="italic">sua rede de apoio</span>.</h2>
+                    <p class="text-stone-600 text-lg mb-6 leading-relaxed">
+                        Meu trabalho como fotógrafa e videomaker nasce da <strong>devoção ao feminino</strong>. No dia do seu parto, eu não sou apenas uma observadora externa. Eu sou aquela que cuida do ambiente, que entende o seu ritmo e que oferece o suporte necessário para você florescer.
+                    </p>
+                    <p class="text-stone-600 text-lg mb-8 leading-relaxed">
+                        Acredito no <strong>amparo ativo</strong>. Interfiro com doçura quando o momento pede uma mão para segurar, um olhar de encorajamento ou um ajuste no espaço para que a luz e o conforto se encontrem. Meu <strong>Seva</strong> é cuidar de você enquanto guardo a memória do seu poder.
+                    </p>
+                    
+                    <div class="flex gap-12 border-t border-stone-200 pt-10">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-3xl font-serif text-stone-900 italic">Cuidado</span>
+                            <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Presença que Ampara</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-3xl font-serif text-stone-900 italic">Vínculo</span>
+                            <span class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Conexão Real</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-2">Sua Mensagem</label>
-                  <textarea rows="4" className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-rose-900 focus:outline-none transition" placeholder="Conte-me um pouco sobre suas expectativas..."></textarea>
-                </div>
+    <!-- Testimonial Section -->
+    <section id="depoimentos" class="py-32 bg-stone-900 text-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-rose-900/10 rounded-full filter blur-[120px] animate-blob"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <i data-lucide="heart" class="w-12 h-12 text-rose-300/30 mx-auto mb-8"></i>
+                <h3 class="text-2xl md:text-4xl font-serif italic leading-relaxed mb-12">
+                    "Vrin foi um anjo no nosso parto. Ela cuida da gente com uma sensibilidade rara. Nem percebemos o esforço, mas sentimos o amparo em cada foto, revivendo cada emoção com uma intensidade que nem sabíamos ser possível."
+                </h3>
+                <div class="w-16 h-[1px] bg-rose-300/50 mx-auto mb-6"></div>
+                <p class="text-stone-400 uppercase tracking-[0.3em] text-[10px] font-bold">O sentimento de quem floresceu</p>
+            </div>
+        </div>
+    </section>
 
-                <button className="w-full bg-rose-900 text-white py-4 rounded-lg hover:bg-rose-800 transition duration-300 font-medium tracking-wide shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                  Enviar Mensagem
-                </button>
-              </form>
+    <!-- Proposta / O Cuidado -->
+    <section id="proposta" class="py-24 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-20">
+                <span class="text-stone-400 uppercase tracking-[0.3em] text-[10px] font-bold mb-2 block">Minha Entrega</span>
+                <h2 class="text-4xl font-serif text-stone-900">Como eu cuido de você</h2>
             </div>
 
-          </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="group p-8 border border-stone-100 hover:border-rose-100 transition-all duration-500 rounded-2xl bg-stone-50/30">
+                    <div class="mb-8 text-rose-900">
+                        <i data-lucide="hand" class="w-10 h-10 stroke-[1.2]"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-4">Amparo Presencial</h3>
+                    <p class="text-stone-500 text-sm leading-relaxed">
+                        Não sou apenas uma câmera na sala. Sou a mão que ampara, o apoio emocional e a guardiã do seu espaço sagrado durante todo o processo.
+                    </p>
+                </div>
+
+                <div class="group p-8 border border-stone-100 hover:border-rose-100 transition-all duration-500 rounded-2xl bg-stone-50/30 transform md:-translate-y-4 shadow-sm">
+                    <div class="mb-8 text-rose-900">
+                        <i data-lucide="sparkles" class="w-10 h-10 stroke-[1.2]"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-4">Registro com Alma</h3>
+                    <p class="text-stone-500 text-sm leading-relaxed">
+                        Através da fotografia e do vídeo, traduzo a força da sua entrega. Capturo o que você sente, não apenas o que os olhos veem.
+                    </p>
+                </div>
+
+                <div class="group p-8 border border-stone-100 hover:border-rose-100 transition-all duration-500 rounded-2xl bg-stone-50/30">
+                    <div class="mb-8 text-rose-900">
+                        <i data-lucide="flower-2" class="w-10 h-10 stroke-[1.2]"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-4">Zelo Pós-Parto</h3>
+                    <p class="text-stone-500 text-sm leading-relaxed">
+                        O cuidado continua. Entrego memórias que curam e reafirmam a beleza da sua jornada como mulher e mãe.
+                    </p>
+                </div>
+            </div>
         </div>
-      </section>
+    </section>
 
-      {/* Footer */}
-      <footer className="bg-stone-900 text-stone-400 py-12 border-t border-stone-800">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-center md:text-left">
-             <h4 className="text-white font-serif text-xl mb-2">Florescer</h4>
-             <p className="text-sm">Fotografia de Parto & Família</p>
-          </div>
-          
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition"><Instagram size={20} /></a>
-            <a href="#" className="hover:text-white transition"><Mail size={20} /></a>
-          </div>
+    <!-- Final CTA / Contact -->
+    <section id="contato" class="py-32 bg-stone-50">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row max-w-6xl mx-auto">
+                <div class="md:w-2/5 bg-stone-900 p-12 text-white flex flex-col justify-between">
+                    <div>
+                        <span class="text-rose-300 uppercase tracking-widest text-[10px] font-bold mb-4 block">Fale com a Vrin</span>
+                        <h2 class="text-4xl font-serif mb-8 leading-tight">Vamos construir essa rede de apoio?</h2>
+                        <p class="text-stone-400 font-light mb-12">
+                            Estou pronta para cuidar de você e do seu momento. Atendimento em Belo Horizonte e região.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <a href="https://wa.me/5531972679964" class="flex items-center gap-4 text-sm hover:text-rose-300 transition-colors">
+                                <i data-lucide="phone" class="w-5 h-5 opacity-50"></i>
+                                (31) 97267-9964
+                            </a>
+                            <a href="mailto:vrnbarcellos@icloud.com" class="flex items-center gap-4 text-sm hover:text-rose-300 transition-colors">
+                                <i data-lucide="mail" class="w-5 h-5 opacity-50"></i>
+                                vrnbarcellos@icloud.com
+                            </a>
+                            <a href="https://instagram.com/vrndavanaresende" target="_blank" class="flex items-center gap-4 text-sm hover:text-rose-300 transition-colors">
+                                <i data-lucide="instagram" class="w-5 h-5 opacity-50"></i>
+                                @vrndavanaresende
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
-          <div className="text-center md:text-right text-sm">
-            <p>&copy; {new Date().getFullYear()} Vrndavana Resende. Todos os direitos reservados.</p>
-          </div>
+                <div class="md:w-3/5 p-12 lg:p-16">
+                    <form class="space-y-8" onsubmit="event.preventDefault(); alert('Mensagem enviada com carinho!');">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-2">
+                                <label class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Seu Nome</label>
+                                <input type="text" class="w-full border-b border-stone-200 py-3 focus:border-rose-900 focus:outline-none transition-colors bg-transparent" placeholder="Como você se chama?" required>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Sua DPP</label>
+                                <input type="date" class="w-full border-b border-stone-200 py-3 focus:border-rose-900 focus:outline-none transition-colors bg-transparent">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-stone-400 font-bold">Como você sonha com o seu parto?</label>
+                            <textarea rows="3" class="w-full border-b border-stone-200 py-3 focus:border-rose-900 focus:outline-none transition-colors bg-transparent" placeholder="Conte-me como posso te amparar..."></textarea>
+                        </div>
+                        <button class="px-12 py-4 bg-stone-900 text-white rounded-full hover:bg-rose-900 transition-all duration-300 text-xs uppercase tracking-widest shadow-xl">
+                            Enviar Convite
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </footer>
+    </section>
 
-      {/* WhatsApp Button Fixed */}
-      <a 
-        href={`https://wa.me/${contactInfo.phone}`}
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-6 right-6 bg-green-600 text-white p-4 rounded-full shadow-2xl hover:bg-green-700 transition-transform hover:scale-110 z-50 flex items-center justify-center"
-        aria-label="Contato WhatsApp"
-      >
-        <Phone size={24} />
-      </a>
+    <footer class="py-12 bg-stone-50 text-center">
+        <p class="text-stone-400 text-[10px] uppercase tracking-[0.4em]">© 2024 Vrndavana Resende • Cuidado que Floresce</p>
+    </footer>
 
-    </div>
-  );
-};
+    <!-- Fixed WhatsApp Button -->
+    <a href="https://wa.me/5531972679964" target="_blank" class="fixed bottom-8 right-8 bg-[#25D366] text-white p-5 rounded-full shadow-2xl hover:scale-110 transition-transform z-50">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
+    </a>
 
-export default App;
+    <script>
+        lucide.createIcons();
+        
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 80) {
+                navbar.classList.add('glass', 'py-4', 'shadow-sm');
+                navbar.classList.remove('py-6');
+            } else {
+                navbar.classList.remove('glass', 'py-4', 'shadow-sm');
+                navbar.classList.add('py-6');
+            }
+        });
+
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const iconName = mobileMenu.classList.contains('hidden') ? 'menu' : 'x';
+            menuBtn.innerHTML = `<i data-lucide="${iconName}"></i>`;
+            lucide.createIcons();
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuBtn.innerHTML = `<i data-lucide="menu"></i>`;
+                lucide.createIcons();
+            });
+        });
+    </script>
+</body>
+</html>
